@@ -19,6 +19,6 @@ function mostrarMatriz(matriz, id) {
     outputDiv.appendChild(table);
   }
 
-let prueba = new Matriz([[1,2,3,4,5,6], [1,2,3,4,5,6], [85, 54, 76, 87, 21, 34]], 2, 2);
+let prueba = new Matriz([[1,2], [1, 2]], 2, 2);
 mostrarMatriz(prueba.getMatriz(), 'output');
 mostrarMatriz(prueba.getMatriz(), 'resultado');
