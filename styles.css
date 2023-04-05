@@ -1,0 +1,49 @@
+body{
+    color: rgb(229, 224, 224);
+}
+h2{
+    color: rgb(26, 26, 26) ;
+    text-align: center;
+}
+
+.main{
+    display: flex;
+    background-color: rgb(16, 38, 94);
+    height: 40rem;
+}
+
+.main > .input{
+    width: 50vw;
+    display: grid;
+    text-align: center;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.main > .resultados{
+    
+    width: 50vw;
+    display: grid;
+    grid-template-rows: 2fr 1fr 2fr;
+    text-align: center;
+}
+
+/* Estilos para mostrar matriz */
+
+.chess-board {
+    display: inline-block;
+    border-collapse: collapse;
+  }
+  .chess-cell {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #fcfbfb;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+
+
+
+

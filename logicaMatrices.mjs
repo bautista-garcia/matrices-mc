@@ -3,6 +3,9 @@ function Matriz  (matriz, filas, columnas)  {
     this.columnas = columnas;
     this.matriz = matriz;
 
+    this.getMatriz = () => {
+        return this.matriz;
+    }
     this.esCuadrada = () => {
         return (this.filas === this.columnas);
     }
@@ -101,3 +104,5 @@ const crearSubMatriz = (matriz, notFila, notColumna, n) => {
 }
 
 console.log(crearSubMatriz([[0,2,3,0], [0,4,5,0], [0,1,0,3], [2,0,1,3]], 0, 1, 4));
+
+export default Matriz;

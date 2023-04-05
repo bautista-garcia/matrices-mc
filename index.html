@@ -4,10 +4,54 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>Hola</h1>
-    <script src="./logicaMatrices.js"></script>
+    <h2>Operaciones con Matrices</h2>
+    <div class="main">
+        <div class="input">
+            <div class="prompt">
+                <h3>Ingresar Cantidad de Filas: </h3>
+                <form action="">
+                    <input type="text">
+                </form>
+            </div>
+            
+            <div class="prompt">
+                <h3>Ingresar Cantidad de Columnas: </h3>
+                <form action="">
+                    <input type="text">
+                </form>
+            </div>
+        
+            <div class="prompt">
+                <h3>Ingresar Matriz: </i></h3>
+                <form action="">
+                    <input type="text">
+                </form>
+            </div>
+        </div>
+        <div class="resultados">
+            <div>
+                <h3>Matriz</h3>
+                <div id="output"></div>
+            </div>
+            <div class="operaciones">
+                <button data-operation="det">Calcular Determinante</button>       
+                <button data-operation="inv">Calcular Inversa</button>       
+                <button data-operation="mul">Multiplicar</button>       
+                <button data-operation="sum">Sumar</button>       
+            </div>
+            <div>
+                <h3>Resultado</h3>
+                <div id="resultado"></div>
+            </div>   
+            
+        </div>
+    </div>
+    
+
+    <script type="module" src="./index.mjs"></script>
 </body> 
 </html>
