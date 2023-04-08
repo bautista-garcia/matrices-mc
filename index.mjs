@@ -2,6 +2,10 @@ import Matriz from './logicaMatrices.mjs';
 
 function mostrarMatriz(matriz, id) {
   var outputDiv = document.getElementById(id);
+  //Add matrix only if there is no matrix already
+  if (outputDiv.firstChild) {
+    outputDiv.removeChild(outputDiv.firstChild);
+  }
   var table = document.createElement('table');
   table.className = 'matrix';
 
@@ -70,6 +74,20 @@ function obtenerMatriz(n, m, input) {
   return matriz;
 }
 
+function mostrarMensaje(mensaje) {
+    const outputDiv = document.getElementById('resultado');
+    outputDiv.textContent = mensaje;
+}
+
+function reset(){
+    const outputDiv = document.getElementById('resultado');
+    outputDiv.textContent = '';
+    const outputDiv1 = document.getElementById('output1');
+    outputDiv1.textContent = '';
+    const outputDiv2 = document.getElementById('output2');
+    outputDiv2.textContent = '';
+}
+
 //Event listeners para las operaciones
 const botonSuma = document.getElementById('suma-btn');
 botonSuma.addEventListener('click', () => {mostrarMatriz(matriz1.sumaMatrices(matriz2.getMatriz(), matriz2.getFilas(), matriz2.getColumnas()), 'resultado')});
@@ -90,8 +108,5 @@ botonComp1.addEventListener('click', () => {mostrarMensaje(matriz1.compatibilida
 const botonComp2 = document.getElementById('cmp2-btn');
 botonComp2.addEventListener('click', () => {mostrarMensaje(matriz2.compatibilidad())});
 
-
-function mostrarMensaje(mensaje) {
-    const outputDiv = document.getElementById('resultado');
-    outputDiv.textContent = mensaje;
-}
+const botonReset = document.getElementById('reset-all');
+botonReset.addEventListener('click', () => {location.reload()});

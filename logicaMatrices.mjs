@@ -28,7 +28,12 @@ function Matriz  (matriz, filas, columnas)  {
             return null;
         }
         else{
-            let matrizResultado = matrizSuma;//Inicializamos la matriz
+            
+            let matrizResultado = new Array(this.getFilas());
+            for (let i = 0; i < this.getFilas(); i++) {
+                matrizResultado[i] = new Array(this.getColumnas());
+            }
+            
             for(let i = 0; i < this.filas; i++){ //Recorremos filas
                 for(let j = 0; j < this.columnas; j++){ //Recorremos columnas
                     matrizResultado[i][j] = this.matriz[i][j] + matrizSuma[i][j]; 
