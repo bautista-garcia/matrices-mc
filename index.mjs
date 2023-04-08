@@ -1,23 +1,25 @@
 import Matriz from './logicaMatrices.mjs';
 
 function mostrarMatriz(matriz, id) {
-    var outputDiv = document.getElementById(id);
-    var table = document.createElement('table');
-    table.className = 'chess-board';
+  var outputDiv = document.getElementById(id);
+  var table = document.createElement('table');
+  table.className = 'matrix';
 
-    for (var i = 0; i < matriz.length; i++) {
-      var row = document.createElement('tr');
-      for (var j = 0; j < matriz[i].length; j++) {
-        var cell = document.createElement('td');
-        cell.className = 'chess-cell';
-        cell.textContent = matriz[i][j];
-        row.appendChild(cell);
-      }
-      table.appendChild(row);
+  for (var i = 0; i < matriz.length; i++) {
+    var row = document.createElement('tr');
+    row.className = 'matrix-row';
+    for (var j = 0; j < matriz[i].length; j++) {
+      var cell = document.createElement('td');
+      cell.className = 'matrix-cell';
+      cell.textContent = matriz[i][j];
+      row.appendChild(cell);
     }
-
-    outputDiv.appendChild(table);
+    table.appendChild(row);
   }
+
+  outputDiv.appendChild(table);
+}
+
 
 let prueba = new Matriz([[1,2], [1, 2]], 2, 2);
 
