@@ -28,7 +28,7 @@ function Matriz  (matriz, filas, columnas)  {
             return null;
         }
         else{
-            
+
             let matrizResultado = new Array(this.getFilas());
             for (let i = 0; i < this.getFilas(); i++) {
                 matrizResultado[i] = new Array(this.getColumnas());
@@ -50,7 +50,7 @@ function Matriz  (matriz, filas, columnas)  {
     this.multiplicacionMatrices = (matrizMultiplicacion) => {
         //Comprobamos que las matrices se puedan multiplicar
         if(!this.multiplicacionDefinida(matrizMultiplicacion)){
-            Window.alert("No se pueden multiplicar las matrices");
+            window.alert("No se pueden multiplicar las matrices");
             return null;
         }
         //Inicializamos la matriz con las filas de this.matriz y columnas de matrizMultiplicacion
@@ -135,6 +135,9 @@ function Matriz  (matriz, filas, columnas)  {
         if(this.esCuadrada()){
             resultado = determinante(this.getMatriz(), this.filas);
         }
+        else {
+            window.alert("No se puede calcular el determinante de una matriz no cuadrada, por lo tanto no tiene inversa.");
+        }
         return resultado;
     }
 
@@ -148,7 +151,7 @@ function Matriz  (matriz, filas, columnas)  {
         // Verificar si la matriz tiene inversa utilizando el método de determinante
         const det = this.calcularDeterminante();
         if (det == 0) {
-            Window.alert("La matriz no tiene inversa.");
+            window.alert("La matriz no tiene inversa.");
             return null;
         }
 
