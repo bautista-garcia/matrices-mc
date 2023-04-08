@@ -10,38 +10,61 @@
 <body>
     <h2>Operaciones con Matrices</h2>
     <div class="main">
-        <div class="input">
-            <div class="prompt">
-                <h3>Ingresar Cantidad de Filas: </h3>
-                <form action="">
-                    <input type="text">
-                </form>
-            </div>
-            
-            <div class="prompt">
-                <h3>Ingresar Cantidad de Columnas: </h3>
-                <form action="">
-                    <input type="text">
-                </form>
-            </div>
-        
-            <div class="prompt">
-                <h3>Ingresar Matriz: </i></h3>
-                <form action="">
-                    <input type="text">
-                </form>
-            </div>
+
+        <div class="input-1">
+            <h3>Datos de matriz 1</h3>
+            <form id="formulario-1">
+                <label for="filas">Filas: </label>
+                <input type="text" id="filas1" name="filas"><br><br>
+                
+                <label for="columnas">Columnas: </label>
+                <input type="text" id="columnas1" name="columnas"><br><br>
+                
+                <label for="matriz">Matriz: </label>
+                <input type="text" id="matriz1" name="matriz"><br><br>
+                
+                <input type="submit" value="Enviar" >
+
+            </form>
         </div>
+
+        <div class="input-1">
+            <h3>Datos de matriz 2</h3>
+            <form id="formulario-2">
+                <label for="filas">Filas: </label>
+                <input type="text" id="filas2" name="filas"><br><br>
+                
+                <label for="filas">Columnas: </label>
+                <input type="text" id="columnas2" name="columnas"><br><br>
+                
+                <label for="matriz">Matriz: </label>
+                <input type="text" id="matriz2" name="matriz"><br><br>
+                
+                
+                <input type="submit" value="Enviar" >
+
+            </form>
+        </div>
+
         <div class="resultados">
-            <div>
-                <h3>Matriz</h3>
-                <div id="output"></div>
+            <div class="matriz-input">
+                <div class="res-1">
+                    <h3>Matriz 1</h3>
+                    <div id="output1"></div>    
+                </div>
+                <div class="res2">
+                    <h3>Matriz 2</h3>
+                    <div id="output2"></div>
+                </div>
+                
             </div>
             <div class="operaciones">
-                <button data-operation="det">Calcular Determinante</button>       
-                <button data-operation="inv">Calcular Inversa</button>       
-                <button data-operation="mul">Multiplicar</button>       
-                <button data-operation="sum">Sumar</button>       
+                <button id="cmp1-btn">Compatibilidad del Sistema1</button>       
+                <button id="cmp2-btn">Compatibilidad del Sistema2</button>       
+                <button id="inv1-btn">Calcular Inversa de 1</button>       
+                <button id="inv2-btn">Calcular Inversa de 2</button>       
+                <button id="mul-btn">Multiplicar</button>       
+                <button id="suma-btn">Sumar</button>       
             </div>
             <div>
                 <h3>Resultado</h3>
