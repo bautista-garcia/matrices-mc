@@ -16,7 +16,7 @@ function Matriz  (matriz, filas, columnas)  {
         return this.matriz;
     }
     this.esCuadrada = () => {
-        return (this.filas === this.columnas);
+        return (matriz.length === matriz[0].length);
     }
     this.mismaDimension = (matriz) => {
         return ((this.filas === matriz.filas) && (this.columnas === matriz.columnas));
@@ -132,6 +132,7 @@ function Matriz  (matriz, filas, columnas)  {
 
         //Retornamos el resultado para que sea accesible al objeto
         let resultado;
+        console.log(this.getMatriz());
         if(this.esCuadrada()){
             resultado = determinante(this.getMatriz(), this.filas);
         }
