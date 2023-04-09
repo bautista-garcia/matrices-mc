@@ -76,6 +76,7 @@ function obtenerMatriz(n, m, input) {
 
 function mostrarMensaje(mensaje) {
     const outputDiv = document.getElementById('resultado');
+    if(outputDiv.firstChild) outputDiv.removeChild(outputDiv.firstChild);
     outputDiv.textContent = mensaje;
 }
 
@@ -103,10 +104,10 @@ const invMul2 = document.getElementById('inv2-btn');
 invMul2.addEventListener('click', () => {mostrarMatriz(matriz2.invertir(), 'resultado')});
 
 const botonComp1 = document.getElementById('cmp1-btn');
-botonComp1.addEventListener('click', () => {mostrarMensaje(matriz1.compatibilidad())});
+botonComp1.addEventListener('click', () => {mostrarMensaje(matriz1.determinarCompatibilidad(matriz1.getMatriz()))});
 
 const botonComp2 = document.getElementById('cmp2-btn');
-botonComp2.addEventListener('click', () => {mostrarMensaje(matriz2.compatibilidad())});
+botonComp2.addEventListener('click', () => {mostrarMensaje(matriz2.determinarCompatibilidad(matriz2.getMatriz()))});
 
 const botonReset = document.getElementById('reset-all');
 botonReset.addEventListener('click', () => {location.reload()});

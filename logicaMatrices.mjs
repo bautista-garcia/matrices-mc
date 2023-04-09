@@ -195,33 +195,64 @@ function Matriz  (matriz, filas, columnas)  {
         return matrizInversa;
     } 
 
-    this.compatibilidad = () => {
+    this.determinarCompatibilidad = (coeficientes) => {
+        // coeficientes es una matriz que contiene los coeficientes de las variables y los términos constantes de las ecuaciones.
+        let filas = coeficientes.length; // número de filas
+        let columnas = coeficientes[0].length; // número de columnas
+        let i, j, k;
+        let pivote = 0; // posición del pivote
         
-
-        //El metodo matrizCoeficientes() crea una matriz con las dimensiones de la matriz original, pero sin la columna de los terminos independientes
-        const matrizCoeficientes = () => {
-            let matrizCoeficientes = new Array(this.filas);
-            for(let i = 0; i < this.filas; i++){
-                matrizCoeficientes[i] = new Array(this.columnas - 1);
+        // Se aplica el método de eliminación Gaussiana para llevar la matriz ampliada a su forma escalonada reducida.
+        for (i = 0; i < filas; i++) {
+          if (coeficientes[i][pivote] == 0) { // Si el elemento en la posición del pivote es cero, se busca un elemento no nulo en la misma columna.
+            for (j = i+1; j < filas; j++) {
+              if (coeficientes[j][pivote] != 0) { // Si se encuentra un elemento no nulo, se intercambian las filas.
+                let temp = coeficientes[i];
+                coeficientes[i] = coeficientes[j];
+                coeficientes[j] = temp;
+                break;
+              }
             }
-            for(let i = 0; i < this.filas; i++){
-                for(let j = 0; j < this.columnas - 1; j++){
-                    matrizCoeficientes[i][j] = this.matriz[i][j];
-                }
+            if (coeficientes[i][pivote] == 0) { // Si no se encontró un elemento no nulo, se pasa a la siguiente columna.
+              pivote++;
+              continue;
             }
-            let objMatrizCoeficientes = new Matriz(matrizCoeficientes, this.filas, this.columnas - 1);
-            return objMatrizCoeficientes;
+          }
+          // Se divide la fila i por el elemento en la posición del pivote para convertirlo en un 1.
+          let divisor = coeficientes[i][pivote];
+          for (j = pivote; j < columnas; j++) {
+            coeficientes[i][j] /= divisor;
+          }
+          // Se eliminan los elementos debajo del pivote en la misma columna.
+          for (j = i+1; j < filas; j++) {
+            let factor = coeficientes[j][pivote];
+            for (k = pivote; k < columnas; k++) {
+              coeficientes[j][k] -= factor * coeficientes[i][k];
+            }
+          }
+          pivote++;
         }
-
         
-
-        if(matrizCoeficientes().calcularDeterminante() == 0){
-            return "El sistema de ecuaciones es incompatible";
+        // Se analiza la última fila no nula de la matriz resultante para determinar la compatibilidad del sistema.
+        let ultimaFila = coeficientes[filas-1];
+        let hayCeros = true;
+        for (i = 0; i < columnas-1; i++) {
+          if (ultimaFila[i] != 0) {
+            hayCeros = false;
+            break;
+          }
         }
-        else{
-            return "El sistema de ecuaciones es compatible";
+        if (hayCeros && ultimaFila[columnas-1] != 0) {
+          return "Incompatible"; // El sistema es incompatible.
         }
-    }
+        else if (hayCeros && ultimaFila[columnas-1] == 0) {
+          return "Compatible indeterminado"; // El sistema es compatible indeterminado.
+        }
+        else {
+          return "Compatible determinado"; // El sistema es compatible determinado.
+        }
+      }
+      
         
     
     
