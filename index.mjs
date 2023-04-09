@@ -1,40 +1,35 @@
 import Matriz from './logicaMatrices.mjs';
 
+//Funcion para mostrar matriz en forma de celdas
 function mostrarMatriz(matriz, id) {
   var outputDiv = document.getElementById(id);
-  //Add matrix only if there is no matrix already
+  //Agregar matriz si no hay ninguna antes
   if (outputDiv.firstChild) {
     outputDiv.removeChild(outputDiv.firstChild);
   }
-  var table = document.createElement('table');
-  table.className = 'matrix';
+  if(matriz != null){ 
+    var table = document.createElement('table');
+    table.className = 'matrix';
 
-  for (var i = 0; i < matriz.length; i++) {
-    var row = document.createElement('tr');
-    row.className = 'matrix-row';
-    for (var j = 0; j < matriz[i].length; j++) {
-      var cell = document.createElement('td');
-      cell.className = 'matrix-cell';
-      cell.textContent = matriz[i][j];
-      row.appendChild(cell);
+    for (var i = 0; i < matriz.length; i++) {
+      var row = document.createElement('tr');
+      row.className = 'matrix-row';
+      for (var j = 0; j < matriz[i].length; j++) {
+        var cell = document.createElement('td');
+        cell.className = 'matrix-cell';
+        cell.textContent = matriz[i][j];
+        row.appendChild(cell);
+      }
+      table.appendChild(row);
     }
-    table.appendChild(row);
   }
 
   outputDiv.appendChild(table);
 }
 
 
-let prueba = new Matriz([[1,2], [1, 2]], 2, 2);
 
 
-
-//Event listeners para transportar input de forms a logica de matrices
-const formulario1 = document.getElementById('formulario-1');
-formulario1.addEventListener('submit', (e) => {enviarFormulario(1, e)});
-
-const formulario2 = document.getElementById('formulario-2');
-formulario2.addEventListener('submit', (e) => {enviarFormulario(2, e)});
 
 let matriz1;
 let matriz2;
@@ -89,6 +84,14 @@ function reset(){
     outputDiv2.textContent = '';
 }
 
+
+//Event listeners para transportar input de forms a logica de matrices
+const formulario1 = document.getElementById('formulario-1');
+formulario1.addEventListener('submit', (e) => {enviarFormulario(1, e)});
+
+const formulario2 = document.getElementById('formulario-2');
+formulario2.addEventListener('submit', (e) => {enviarFormulario(2, e)});
+
 //Event listeners para las operaciones
 const botonSuma = document.getElementById('suma-btn');
 botonSuma.addEventListener('click', () => {mostrarMatriz(matriz1.sumaMatrices(matriz2.getMatriz(), matriz2.getFilas(), matriz2.getColumnas()), 'resultado')});
@@ -110,4 +113,4 @@ const botonComp2 = document.getElementById('cmp2-btn');
 botonComp2.addEventListener('click', () => {mostrarMensaje(matriz2.determinarCompatibilidad(matriz2.getMatriz()))});
 
 const botonReset = document.getElementById('reset-all');
-botonReset.addEventListener('click', () => {location.reload()});
+botonReset.addEventListener('click', () => {reset()});

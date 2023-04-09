@@ -1,1 +1,3 @@
 # matrices-mc
+
+Este es un proyecto para la materia Matematica C de la carrera Ingenieria en Computacion (UNLP). Donde con el grupo conformado por @valemicolgarcia, @tacianopacchialat y @bautistagarcia desarrollamos un programa en Javascript para realizar diversas operaciones con matrices, usando las estrategias de calculo vistas en clase en conjunto con diversos algoritmos para lograr llevar lo visto en papel a un programa. 

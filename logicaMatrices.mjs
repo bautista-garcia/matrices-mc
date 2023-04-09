@@ -2,6 +2,39 @@ function Matriz  (matriz, filas, columnas)  {
     this.filas = filas;
     this.columnas = columnas;
     this.matriz = matriz;
+    
+    
+    const copiarMatriz = (copia, original, dim) =>{
+        for(let i = 0; i < dim; i++){
+            for(let j = 0; j < dim; j++){
+                copia[i][j] = original[i][j];
+            }
+        }
+        return;
+    }
+
+    //Metodo para crear submatriz con dimensiones reducidas
+    const crearSubMatriz = (matriz, notFila, notColumna, n) => {  
+
+        //Reservamos espacio de memoria
+        let modifMatriz = new Array(n);
+        for (let i = 0; i < n; i++) {
+            modifMatriz[i] = new Array(n);
+        }
+        //Creamos matriz nueva para no modificar la original
+        copiarMatriz(modifMatriz, matriz, n);
+
+        //Creamos subMatriz y guardamos en modifMatriz
+        for(let i = 0; i < n; i++){
+            modifMatriz[notFila].pop();
+        }
+        for(let i = 0; i < n ; i ++){
+            modifMatriz[i].splice(notColumna, 1);
+        }
+        modifMatriz.shift();
+        return modifMatriz;    
+    }
+
 
     this.getFilas = () => {
         return this.filas;
@@ -28,7 +61,7 @@ function Matriz  (matriz, filas, columnas)  {
             return null;
         }
         else{
-
+            //Reservamos espacio en memoria para matriz resultado
             let matrizResultado = new Array(this.getFilas());
             for (let i = 0; i < this.getFilas(); i++) {
                 matrizResultado[i] = new Array(this.getColumnas());
@@ -43,17 +76,20 @@ function Matriz  (matriz, filas, columnas)  {
         }
     }
 
-    this.multiplicacionDefinida = (matriz) => {
-        return (this.columnas === matriz.filas);
-    }
 
     this.multiplicacionMatrices = (matrizMultiplicacion) => {
-        //Comprobamos que las matrices se puedan multiplicar
-        if(!this.multiplicacionDefinida(matrizMultiplicacion)){
+        //Metodo static que chequea validez de operacion
+        function multiplicacionDefinida(matriz){
+            return (this.columnas === matriz.filas);
+        }
+
+        if(!multiplicacionDefinida(matrizMultiplicacion)){
             window.alert("No se pueden multiplicar las matrices");
             return null;
         }
-        //Inicializamos la matriz con las filas de this.matriz y columnas de matrizMultiplicacion
+
+
+        //Reservamos espacio en memoria, m1(n x m) * m2(k x j) = m3(n x j)
         let matrizResultado = new Array(this.filas);
         for(let i = 0; i < this.filas; i++){
             matrizResultado[i] = new Array(matrizMultiplicacion.columnas);
@@ -75,7 +111,6 @@ function Matriz  (matriz, filas, columnas)  {
 
         return matrizResultado;
     }
-    //Metodo para calcular el determinante de una matriz, metodo static
     
     
     
@@ -85,54 +120,20 @@ function Matriz  (matriz, filas, columnas)  {
             if(n == 2){
                 return ((matrizCalc[0][0] * matrizCalc[1][1]) - (matrizCalc[0][1] * matrizCalc[1][0]));
             }
-    
-    
+
             let res = 0; //En res se guarda el resultado de cada llamado recursivo
-            let i = 0; //i = 0 porque nos movemos por la fila 0
+            let i = 0; //i = 0, ya que nos movemos por fila 0, podriamos haber elegido cualquier fila/columna
     
             //Formula de serie especificada
             for(let j = 0; j < n; j++){
                 res += Math.pow(-1, i + j + 2) * matrizCalc[i][j] * determinante(crearSubMatriz(matrizCalc,i,j,n), n - 1);
             }
-            //Retorno res de llamado recursivo
+            //Retorno res de llamado recursivo, donde se va a sumar al for
             return res; 
-    
-        }
-        //Metodo para copiar matriz original a copia, por referencia
-        const copiarMatriz = (copia, original, dim) =>{
-            for(let i = 0; i < dim; i++){
-                for(let j = 0; j < dim; j++){
-                    copia[i][j] = original[i][j];
-                }
-            }
-            return;
         }
 
-        //Metodo para crear submatriz con dimensiones reducidas
-        const crearSubMatriz = (matriz, notFila, notColumna, n) => {  
-
-            //Reservamos espacio de memoria
-            let modifMatriz = new Array(n);
-            for (let i = 0; i < n; i++) {
-                modifMatriz[i] = new Array(n);
-            }
-            //Creamos matriz nueva para no modificar la original
-            copiarMatriz(modifMatriz, matriz, n);
-
-            //Creamos subMatriz y guardamos en modifMatriz
-            for(let i = 0; i < n; i++){
-                modifMatriz[notFila].pop();
-            }
-            for(let i = 0; i < n ; i ++){
-                modifMatriz[i].splice(notColumna, 1);
-            }
-            modifMatriz.shift();
-            return modifMatriz;    
-        }
-
-        //Retornamos el resultado para que sea accesible al objeto
+        //Unicamente llamamos a determinante si la matriz es cuadrada
         let resultado;
-        console.log(this.getMatriz());
         if(this.esCuadrada()){
             resultado = determinante(this.getMatriz(), this.filas);
         }
@@ -151,52 +152,56 @@ function Matriz  (matriz, filas, columnas)  {
 
         // Verificar si la matriz tiene inversa utilizando el método de determinante
         const det = this.calcularDeterminante();
-        if (det == 0) {
-            window.alert("La matriz no tiene inversa.");
+        //det(A) = 0, significa que no tiene inversa. Con el null hacemos que no se muestre nada en pantalla
+        if (det == 0) { 
             return null;
         }
 
-        // Construir la matriz ampliada
+        //Armamos la matriz (A|I), I es la matriz identidad
         const matrizAmpliada = [];
         for (let i = 0; i < filas; i++) {
             matrizAmpliada[i] = [];
             for (let j = 0; j < columnas * 2; j++) {
+                //La primera parte de la matriz ampliada queda igual
                 if (j < columnas) {
                     matrizAmpliada[i][j] = matriz[i][j];
-                } else {
+                } 
+                //En la segunda parte construimos la identidad, j - columnas nos permite saber si es diagonal o no
+                else {
                     matrizAmpliada[i][j] = i == j - columnas ? 1 : 0;
                 }
             }
         }
 
         // Aplicar la eliminación gaussiana para obtener la matriz inversa
-        for (let i = 0; i < filas; i++) {
-            const pivot = matrizAmpliada[i][i];
+        for (let i = 0; i < filas; i++) { 
+            const pivot = matrizAmpliada[i][i]; //Tomamos a los de la diagonal de A como pivotes
             for (let j = 0; j < columnas * 2; j++) {
-                matrizAmpliada[i][j] /= pivot;
+                matrizAmpliada[i][j] /= pivot; //Dividimos a toda la fila i de (A|I) por el pivot
             }
-            for (let k = 0; k < filas; k++) {
+            for (let k = 0; k < filas; k++) { 
                 if (k != i) {
                     const factor = matrizAmpliada[k][i];
                     for (let j = 0; j < columnas * 2; j++) {
-                        matrizAmpliada[k][j] -= factor * matrizAmpliada[i][j];
+                        matrizAmpliada[k][j] -= factor * matrizAmpliada[i][j]; //Realizamos operacion elemental de resta(suma de opuesto) por multiplo de otra fila
                     }
                 }
             }
         }
 
-        // Extraer la matriz inversa de la matriz ampliada
+        //Sabemos que en nuestra mat ampliada, (I, A -1)
         const matrizInversa = [];
         for (let i = 0; i < filas; i++) {
             matrizInversa[i] = matrizAmpliada[i].slice(columnas);
         }
 
-        // Retornar la matriz inversa
+
         return matrizInversa;
     } 
 
     this.determinarCompatibilidad = (coeficientes) => {
         // coeficientes es una matriz que contiene los coeficientes de las variables y los términos constantes de las ecuaciones.
+        
         let filas = coeficientes.length; // número de filas
         let columnas = coeficientes[0].length; // número de columnas
         let i, j, k;
@@ -204,7 +209,7 @@ function Matriz  (matriz, filas, columnas)  {
         
         // Se aplica el método de eliminación Gaussiana para llevar la matriz ampliada a su forma escalonada reducida.
         for (i = 0; i < filas; i++) {
-          if (coeficientes[i][pivote] == 0) { // Si el elemento en la posición del pivote es cero, se busca un elemento no nulo en la misma columna.
+          if (coeficientes[i][pivote] == 0) { // Si el elemento en la posición del pivote es cero hacemos permutacion
             for (j = i+1; j < filas; j++) {
               if (coeficientes[j][pivote] != 0) { // Si se encuentra un elemento no nulo, se intercambian las filas.
                 let temp = coeficientes[i];
@@ -223,7 +228,7 @@ function Matriz  (matriz, filas, columnas)  {
           for (j = pivote; j < columnas; j++) {
             coeficientes[i][j] /= divisor;
           }
-          // Se eliminan los elementos debajo del pivote en la misma columna.
+          // Al igual que en la matriz inversa hacemos 0 los elementos debajo de la diagonal.
           for (j = i+1; j < filas; j++) {
             let factor = coeficientes[j][pivote];
             for (k = pivote; k < columnas; k++) {
@@ -234,22 +239,22 @@ function Matriz  (matriz, filas, columnas)  {
         }
         
         // Se analiza la última fila no nula de la matriz resultante para determinar la compatibilidad del sistema.
-        let ultimaFila = coeficientes[filas-1];
+        let ultimaFila = coeficientes[filas-1]; //Nos paramos en ultima fila, index 0
         let hayCeros = true;
-        for (i = 0; i < columnas-1; i++) {
+        for (i = 0; i < columnas-1; i++) { //Solo nos interesa si todos los coeficientes de la ultima fila son 0, sino hacemos break
           if (ultimaFila[i] != 0) {
             hayCeros = false;
             break;
           }
         }
-        if (hayCeros && ultimaFila[columnas-1] != 0) {
-          return "Incompatible"; // El sistema es incompatible.
+        if (hayCeros && ultimaFila[columnas-1] != 0) { //Caso donde te queda un absurdo
+          return "Incompatible"; 
         }
-        else if (hayCeros && ultimaFila[columnas-1] == 0) {
-          return "Compatible indeterminado"; // El sistema es compatible indeterminado.
+        else if (hayCeros && ultimaFila[columnas-1] == 0) { //Caso donde coeficientes son 0 pero el termino independiente tambien
+          return "Compatible indeterminado"; 
         }
         else {
-          return "Compatible determinado"; // El sistema es compatible determinado.
+          return "Compatible determinado"; //Si no hay todos 0 en coeficientes sera comp determinado
         }
       }
       
@@ -259,14 +264,5 @@ function Matriz  (matriz, filas, columnas)  {
 }
 
 
-
-let matrizPrueba1 = new Matriz([[0,2,3,0], [0,4,5,0], [0,1,0,3], [2,0,1,3]], 4, 4);
-let matrizPrueba2 = new Matriz([[-2, 1, 3],[4, 1, 6]], 2, 3);
-
-
-
-
-
-console.log("Determinante de matriz: " + matrizPrueba1.getMatriz() + ": " + matrizPrueba1.calcularDeterminante());
 
 export default Matriz;
