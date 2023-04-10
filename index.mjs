@@ -22,9 +22,9 @@ function mostrarMatriz(matriz, id) {
       }
       table.appendChild(row);
     }
-  }
+}
+outputDiv.appendChild(table);
 
-  outputDiv.appendChild(table);
 }
 
 
@@ -101,10 +101,14 @@ botonMul.addEventListener('click', () => {mostrarMatriz(matriz1.multiplicacionMa
 
 
 const invMul1 = document.getElementById('inv1-btn');
-invMul1.addEventListener('click', () => {mostrarMatriz(matriz1.invertir(), 'resultado')});
+invMul1.addEventListener('click', () => {
+    if(matriz1.calcularDeterminante() != 0)mostrarMatriz(matriz1.invertir(), 'resultado');
+    else window.alert("No tiene inversa")});
 
 const invMul2 = document.getElementById('inv2-btn');
-invMul2.addEventListener('click', () => {mostrarMatriz(matriz2.invertir(), 'resultado')});
+invMul2.addEventListener('click', () => {
+    if(matriz2.calcularDeterminante() != 0)mostrarMatriz(matriz2.invertir(), 'resultado');
+    else window.alert("No tiene inversa")});
 
 const botonComp1 = document.getElementById('cmp1-btn');
 botonComp1.addEventListener('click', () => {mostrarMensaje(matriz1.determinarCompatibilidad(matriz1.getMatriz()))});
