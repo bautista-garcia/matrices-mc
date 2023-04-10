@@ -173,17 +173,18 @@ function Matriz  (matriz, filas, columnas)  {
             }
         }
 
-        // Aplicar la eliminación gaussiana para obtener la matriz inversa
+        // Aplicar la eliminación gaussiana para obtener la matriz inversa en primera parte de matriz ampliada, 
         for (let i = 0; i < filas; i++) { 
             const pivot = matrizAmpliada[i][i]; //Tomamos a los de la diagonal de A como pivotes
             for (let j = 0; j < columnas * 2; j++) {
-                matrizAmpliada[i][j] /= pivot; //Dividimos a toda la fila i de (A|I) por el pivot
+                matrizAmpliada[i][j] /= pivot; //Dividimos a toda la fila i de (A|I) por el pivot, para hacer que el pivot nos quede = 1
             }
+            //El siguiente for tiene el proposito de recorrer las filas por debajo del pivot
             for (let k = 0; k < filas; k++) { 
-                if (k != i) {
-                    const factor = matrizAmpliada[k][i];
+                if (k != i) { //Si no estamos parados sobre el pivot
+                    const factor = matrizAmpliada[k][i]; //En cada fila tomo como factor el elemento que al multiplicarlo por 1(pivot convertido) y restarselo a la fila k me deja las filas debajo o encima del pivot en 0
                     for (let j = 0; j < columnas * 2; j++) {
-                        matrizAmpliada[k][j] -= factor * matrizAmpliada[i][j]; //Realizamos operacion elemental de resta(suma de opuesto) por multiplo de otra fila
+                        matrizAmpliada[k][j] -= factor * matrizAmpliada[i][j]; //Realizamos operacion elemental de resta(suma de opuesto) por multiplo de otra fila, detallado arriba
                     }
                 }
             }
@@ -191,6 +192,7 @@ function Matriz  (matriz, filas, columnas)  {
 
         //Sabemos que en nuestra mat ampliada, (I, A -1)
         const matrizInversa = [];
+        //Tomamos todos los elementos a partir de columna y los colocamos en cada fila.
         for (let i = 0; i < filas; i++) {
             matrizInversa[i] = matrizAmpliada[i].slice(columnas);
         }
